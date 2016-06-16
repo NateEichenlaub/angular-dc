@@ -97,10 +97,10 @@ angularDc.directive('dcChart', ['$timeout',
         }
 
         function getValidOptionsForChart(chart) {
-
+            
             // all chart options are exposed via a function
             return _(chart).functions()
-                .extend(directiveOptions)
+                .concat(directiveOptions)
                 .map(function(s) {
                     return 'dc' + s.charAt(0).toUpperCase() + s.substring(1);
                 })
@@ -108,7 +108,7 @@ angularDc.directive('dcChart', ['$timeout',
         }
 
         function getOptionsFromAttrs(scope, iAttrs, validOptions) {
-            return _(iAttrs.$attr)
+            return  _(iAttrs.$attr)
                 .keys()
                 .intersection(validOptions)
                 .map(function(key) {
@@ -119,7 +119,7 @@ angularDc.directive('dcChart', ['$timeout',
                     }
                     return [key, value];
                 })
-                .zipObject()
+                .fromPairs()
                 .value();
         }
         return {
@@ -160,7 +160,7 @@ angularDc.directive('dcChart', ['$timeout',
                                 return undefined;
                             }
                         });
-                    if (options.any(_.isUndefined)) {
+                    if (options.some(_.isUndefined)) {
                         // return undefined if there is at least one undefined option
                         // so that the $watch dont call us again at this $digest time
                         return undefined;
