@@ -44,7 +44,7 @@ angularDc.directive('dcChart', ['$timeout',
 
             // Get the chart creation function for the chartType
             var chartFactory = dc[chartType];
-
+            
             // Create an unconfigured instance of the chart
             var chart = chartFactory(chartElement, chartGroupName);
 
@@ -176,6 +176,10 @@ angularDc.directive('dcChart', ['$timeout',
                         var a = angular.element(iElement[0].querySelector('a.reset'));
                         a.on('click', function() {
                             chart.filterAll();
+                            if(iAttrs.dcRangeChart){
+                                var rangeChart = scope.$eval(iAttrs.dcRangeChart);
+                                rangeChart.filterAll();
+                            }
                             dc.redrawAll();
                         });
                         a.attr('href', 'javascript:;');

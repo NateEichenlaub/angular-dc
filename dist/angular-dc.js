@@ -166,6 +166,10 @@
                             var a = angular.element(iElement[0].querySelector('a.reset'));
                             a.on('click', function() {
                                 chart.filterAll();
+                                if (iAttrs.dcRangeChart) {
+                                    var rangeChart = scope.$eval(iAttrs.dcRangeChart);
+                                    rangeChart.filterAll();
+                                }
                                 dc.redrawAll();
                             });
                             a.attr('href', 'javascript:;');
